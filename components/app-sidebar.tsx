@@ -1,124 +1,56 @@
 "use client"
 
 import * as React from "react"
-import { AudioWaveform, BookOpen, Bot, Command, Frame, GalleryVerticalEnd, Map, PieChart, Settings2, SquareTerminal } from 'lucide-react'
+import {
+  Calendar,
+  Home,
+  ListChecks,
+  User,
+  ClipboardCheck,
+  LaptopMinimalCheck,
+  Frame,
+  Map,
+  PieChart,
+} from 'lucide-react'
 
 import { NavMain } from "./nav-main"
 import { NavProjects } from "./nav-projects"
-import { TeamSwitcher } from "./team-switcher"
-import { ThemeToggle } from "./theme-toggle"
+import { NavFooter} from "./nav-footer"
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarHeader,
+  SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
 
 // This is sample data.
 const data = {
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
   navMain: [
     {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
-      isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
+      title: "Home",
+      url: "/dashboard/",
+      icon: Home,
     },
     {
-      title: "Models",
+      title: "Completed",
       url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
+      icon: ListChecks,
     },
     {
-      title: "Documentation",
+      title: "Today",
       url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
+      icon: Calendar,
     },
     {
-      title: "Settings",
+      title: "Important",
       url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
+      icon: ClipboardCheck,
+    },
+    {
+      title: "Personal",
+      url: "#",
+      icon: User,
     },
   ],
   projects: [
@@ -142,16 +74,31 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" variant="floating" {...props}>
+    <Sidebar collapsible="icon" variant="inset" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+                size="lg"
+                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+            >
+              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                <LaptopMinimalCheck className="size-4" />
+              </div>
+              <div className="grid flex-1 text-left text-sm leading-tight">
+                <span className="truncate font-semibold">Acme Inc</span>
+                <span className="truncate text-xs">Free</span>
+              </div>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <ThemeToggle />
+        <NavFooter />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

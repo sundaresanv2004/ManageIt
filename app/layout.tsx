@@ -21,7 +21,7 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
       >
       <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="system"
           enableSystem
           disableTransitionOnChange
       >
