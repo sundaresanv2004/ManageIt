@@ -12,7 +12,6 @@ import {
   Map,
   PieChart,
 } from 'lucide-react'
-
 import { NavMain } from "./nav-main"
 import { NavProjects } from "./nav-projects"
 import { NavFooter} from "./nav-footer"
@@ -24,7 +23,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 
-// This is sample data.
+
 const data = {
   navMain: [
     {

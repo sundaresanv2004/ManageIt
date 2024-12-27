@@ -1,7 +1,16 @@
 "use client"
 
 import * as React from "react"
-import {BadgeCheck, Bell, CreditCard, LogOut, Menu, Plus, Search, Sparkles} from 'lucide-react'
+import {
+  Bell,
+  LogOut,
+  Menu,
+  Plus,
+  Search,
+  Settings,
+  Sparkles,
+  User
+} from 'lucide-react'
 
 import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -18,9 +27,6 @@ import {Separator} from "@/components/ui/separator";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
 
@@ -52,15 +58,50 @@ export function NavBar() {
                   <Menu className='h-4 w-4'/>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="top" className="md:hidden">
-                <SheetHeader>
-                  <SheetTitle>Edit profile</SheetTitle>
-                  <SheetDescription>
-                    Make changes to your profile here. Click save when you&#39;re done.
-                  </SheetDescription>
-                </SheetHeader>
+              <SheetContent side="top">
+                <div className="flex items-center space-x-4 mb-6">
+                  <Avatar className="h-12 w-12">
+                    <AvatarImage src="/placeholder.svg" alt="User"/>
+                    <AvatarFallback>AK</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <p className="text-sm font-medium">Akkshay Kumar</p>
+                    <p className="text-xs text-muted-foreground">sundaresanv16@gmail.com</p>
+                  </div>
+                </div>
                 <div className="grid gap-4 py-4">
-                  Hello
+                  <Button className="justify-start" onClick={() => {
+                  }}>
+                    <Plus className="mr-2 h-4 w-4"/>
+                    New Project
+                  </Button>
+                  <Button variant="ghost" className="justify-start" onClick={() => {
+                  }}>
+                    <Bell className="mr-2 h-5 w-5"/>
+                    Notifications
+                  </Button>
+                  <Separator/>
+                  <Button variant="ghost" className="justify-start" onClick={() => {
+                  }}>
+                    <Sparkles className="mr-2 h-4 w-4"/>
+                    Upgrade to Pro
+                  </Button>
+                  <Button variant="ghost" className="justify-start" onClick={() => {
+                  }}>
+                    <User className="mr-2 h-4 w-4"/>
+                    Profile
+                  </Button>
+                  <Button variant="ghost" className="justify-start" onClick={() => {
+                  }}>
+                    <Settings className="mr-2 h-4 w-4"/>
+                    Settings
+                  </Button>
+                  <Separator/>
+                  <Button variant="ghost" className="justify-start" onClick={() => {
+                  }}>
+                    <LogOut className="mr-2 h-4 w-4"/>
+                    Log out
+                  </Button>
                 </div>
               </SheetContent>
             </Sheet>
@@ -108,16 +149,12 @@ export function NavBar() {
                 <DropdownMenuSeparator/>
                 <DropdownMenuGroup>
                   <DropdownMenuItem>
-                    <BadgeCheck/>
-                    Account
+                    <User/>
+                    Profile
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <CreditCard/>
-                    Billing
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Bell/>
-                    Notifications
+                    <Settings />
+                    Settings
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator/>
