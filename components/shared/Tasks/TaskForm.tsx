@@ -97,7 +97,7 @@ const TaskForm = ({
                     <div className={"sm:mt-2"}>
                         <FormField
                             control={form.control}
-                            name="date"
+                            name="dueDate"
                             render={({ field }) => (
                                 <FormItem className="flex flex-col">
                                     <FormLabel>Due Date</FormLabel>

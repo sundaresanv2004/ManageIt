@@ -11,14 +11,16 @@ import {
 } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import { Plus } from 'lucide-react'
-import TaskForm from "@/components/shared/TaskForm"
+import TaskForm from "@/components/shared/Tasks/TaskForm"
 import {taskSchema, TaskSchemaType} from "@/lib/zodSchema"
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
+import {useToast} from "@/hooks/use-toast";
 
 const CreateTask = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSheetOpen, setSheetOpen] = useState(false);
+    const { toast } = useToast()
 
     const form = useForm<TaskSchemaType>({
         resolver: zodResolver(taskSchema),
@@ -33,15 +35,41 @@ const CreateTask = () => {
     const onSubmit = async (values: TaskSchemaType) => {
         setIsSubmitting(true);
         try {
-            console.log(values)
-            form.reset();
-            setSheetOpen(false);
+            const sanitizedValues = {
+                ...values,
+                dueDate: values.dueDate ? new Date(values.dueDate) : null,
+            };
+
+            const res = await fetch('/api/tasks', {
+                method: "POST",
+                body: JSON.stringify(sanitizedValues),
+                headers: { 'Content-Type': 'application/json' },
+            });
+
+            if (!res.ok) {
+                throw new Error(`Server responded with status ${res.status}`);
+            }
+
+            toast({
+                title: "Task Created",
+                description: "Your task was successfully created.",
+            });
+
         } catch (error) {
-            console.error("Error creating todo:", error);
+            const errorMessage = error instanceof Error ? error.message : 'Something went wrong. Please try again later.';
+            console.error(errorMessage);
+            toast({
+                title: "Error",
+                description: `We encountered an issue while creating the task. Please try again later.`,
+                variant: "destructive",
+            });
         } finally {
             setIsSubmitting(false);
+            setSheetOpen(false);
+            form.reset();
         }
     };
+
 
     return (
         <Sheet open={isSheetOpen} onOpenChange={setSheetOpen}>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react'
-import CreateTask from "@/components/shared/CreateTask";
+import CreateTask from "@/components/shared/Tasks/CreateTask";
 
 const Hero = () => {
     const [currentTime, setCurrentTime] = useState(new Date());
