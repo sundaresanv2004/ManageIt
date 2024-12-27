@@ -91,7 +91,6 @@ export default function TaskDetailsSheet() {
                 </div>
               </div>
 
-              {/* Attachments Section */}
               <div className="space-y-4">
                 <h2 className="text-xl font-semibold">Attachments</h2>
                 <div className="space-y-3">

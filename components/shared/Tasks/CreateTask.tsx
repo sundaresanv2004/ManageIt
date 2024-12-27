@@ -16,6 +16,7 @@ import {taskSchema, TaskSchemaType} from "@/lib/zodSchema"
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useToast} from "@/hooks/use-toast";
+import { mutate } from "swr";
 
 const CreateTask = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -54,7 +55,7 @@ const CreateTask = () => {
                 title: "Task Created",
                 description: "Your task was successfully created.",
             });
-
+            await mutate("/api/tasks");
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : 'Something went wrong. Please try again later.';
             console.error(errorMessage);

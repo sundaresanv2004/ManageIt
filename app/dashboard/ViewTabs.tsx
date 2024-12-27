@@ -1,13 +1,27 @@
+"use client";
+
 import React from 'react'
+import useSWR from "swr";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import ViewTasks from "@/components/shared/Tasks/ViewTasks"
 import { LayoutGrid, List, Columns } from 'lucide-react'
-import prisma from "@/lib/prisma";
 import TaskGrid from "@/components/shared/Tasks/TaskGrid";
+import {Task} from "@prisma/client";
+import Loading from "@/app/dashboard/loading";
 
-const ViewTabs = async () => {
-    const tasks = await prisma.task.findMany()
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
+const ViewTabs = () => {
+    const {
+        data: tasks,
+        error,
+        isLoading,
+    } = useSWR<Task[]>("/api/tasks", fetcher);
+
+    if (isLoading) return <Loading />;
+
+    const tasksList = tasks || [];
+    console.log(tasks);
     return (
         <div className="w-full max-w-7xl mx-auto">
             <Tabs defaultValue="grid">
@@ -26,10 +40,10 @@ const ViewTabs = async () => {
                     </TabsTrigger>
                 </TabsList>
                 <TabsContent value="grid" className="mt-6">
-                    <TaskGrid tasks={tasks} />
+                    <TaskGrid tasks={tasksList} />
                 </TabsContent>
                 <TabsContent value="table" className="mt-6">
-                    <ViewTasks tasks={tasks} />
+                    <ViewTasks tasks={tasksList} />
                 </TabsContent>
                 <TabsContent value="kanban" className="mt-6">
                     <div className="text-center text-gray-500 dark:text-gray-400">Kanban View Coming Soon</div>
