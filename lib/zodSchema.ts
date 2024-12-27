@@ -2,7 +2,7 @@ import {z} from 'zod'
 
 export const taskSchema = z.object({
     title: z.string().min(1, "Title is required").max(50, "Title must be less than 50 characters"),
-    description: z.string().max(500, "Description must be 500 characters or less").optional(),
+    description: z.string().max(1000, "Description must be 500 characters or less").optional(),
     dueDate: z
         .union([
             z.date(),

@@ -38,7 +38,7 @@ const data = {
     },
     {
       title: "Today",
-      url: "#",
+      url: "/dashboard/today/",
       icon: Calendar,
     },
     {
