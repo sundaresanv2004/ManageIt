@@ -4,7 +4,6 @@ import ViewTasks from "@/components/shared/Tasks/ViewTasks"
 import { LayoutGrid, List, Columns } from 'lucide-react'
 import prisma from "@/lib/prisma";
 import TaskGrid from "@/components/shared/Tasks/TaskGrid";
-import KanbanView from "@/components/shared/Tasks/KanbanView";
 
 const ViewTabs = async () => {
     const tasks = await prisma.task.findMany()
@@ -33,7 +32,7 @@ const ViewTabs = async () => {
                     <ViewTasks tasks={tasks} />
                 </TabsContent>
                 <TabsContent value="kanban" className="mt-6">
-                    <KanbanView tasks={tasks} />
+                    <div className="text-center text-gray-500 dark:text-gray-400">Kanban View Coming Soon</div>
                 </TabsContent>
             </Tabs>
         </div>
