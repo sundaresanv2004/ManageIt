@@ -27,7 +27,7 @@ const TaskGrid: React.FC<TaskGridProps> = ({ tasks }) => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {tasks.map((task) => (
-                <Card key={task.id} className="overflow-hidden">
+                <Card key={task.id} className="overflow-hidden group transition-all duration-300 ease-in-out hover:shadow-md hover:-translate-y-1">
                     <CardHeader className="pb-2">
                         <div className="flex justify-between items-start">
                             <div className="flex items-center space-x-2">

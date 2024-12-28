@@ -1,7 +1,7 @@
 import React from 'react'
 import { Badge } from "@/components/ui/badge"
 import { Flag } from 'lucide-react'
-import {Priority} from "@prisma/client";
+import { Priority } from "@prisma/client";
 
 const priorityMap: Record<Priority, { label: string, class: string }> = {
   LOW: { label: "Low", class: "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-100" },
@@ -11,10 +11,10 @@ const priorityMap: Record<Priority, { label: string, class: string }> = {
 
 const PriorityBadge = ({ priority }: { priority: Priority }) => {
   return (
-    <Badge className={`font-semibold ${priorityMap[priority].class}`}>
-      <Flag className="w-3 h-3 mr-1" />
-      {priorityMap[priority].label}
-    </Badge>
+      <Badge className={`font-semibold ${priorityMap[priority].class} hover:${priorityMap[priority].class}`}>
+        <Flag className="w-3 h-3 mr-1" />
+        {priorityMap[priority].label}
+      </Badge>
   )
 }
 
