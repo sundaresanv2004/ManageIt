@@ -21,7 +21,6 @@ const ViewTabs = () => {
     if (isLoading) return <Loading />;
 
     const tasksList = tasks || [];
-    console.log(tasks);
     return (
         <div className="w-full max-w-7xl mx-auto">
             <Tabs defaultValue="grid">

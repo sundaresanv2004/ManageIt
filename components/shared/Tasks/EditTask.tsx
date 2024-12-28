@@ -9,16 +9,16 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
-import { Button } from "@/components/ui/button"
-import { Plus } from 'lucide-react'
+import {Pencil} from 'lucide-react'
 import TaskForm from "@/components/shared/Tasks/TaskForm"
 import {taskSchema, TaskSchemaType} from "@/lib/zodSchema"
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useToast} from "@/hooks/use-toast";
 import { mutate } from "swr";
+import {Task} from "@prisma/client";
 
-const CreateTask = () => {
+const EditTask = ({ task }: { task: Task }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSheetOpen, setSheetOpen] = useState(false);
     const { toast } = useToast()
@@ -34,22 +34,8 @@ const CreateTask = () => {
                 ...values,
                 dueDate: values.dueDate ? new Date(values.dueDate) : null,
             };
+            console.log(sanitizedValues);
 
-            const res = await fetch('/api/tasks', {
-                method: "POST",
-                body: JSON.stringify(sanitizedValues),
-                headers: { 'Content-Type': 'application/json' },
-            });
-
-            if (!res.ok) {
-                throw new Error(`Server responded with status ${res.status}`);
-            }
-
-            toast({
-                title: "Task Created",
-                description: "Your task was successfully created.",
-            });
-            await mutate("/api/tasks");
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : 'Something went wrong. Please try again later.';
             console.error(errorMessage);
@@ -69,10 +55,10 @@ const CreateTask = () => {
     return (
         <Sheet open={isSheetOpen} onOpenChange={setSheetOpen}>
             <SheetTrigger asChild>
-                <Button>
-                    <Plus className="w-4 h-4 mr-2"/>
-                    Add Task
-                </Button>
+                <a className="flex items-center gap-2">
+                    <Pencil className="h-4 w-4" />
+                    Edit
+                </a>
             </SheetTrigger>
             <SheetContent
                 className={"flex flex-col w-full sm:max-w-[540px] sm:rounded-l-[10px] mt-auto sm:mt-0"}
@@ -86,10 +72,11 @@ const CreateTask = () => {
                 <div className="h-full flex flex-col">
                     <TaskForm
                         defaultValues={{
-                            title: "",
-                            description: "",
-                            status: "TODO",
-                            priority: "MEDIUM",
+                            title: task.title,
+                            description: task.description || "",
+                            status: task.status,
+                            priority: task.priority,
+                            dueDate: task.dueDate ? new Date(task.dueDate) : null
                         }}
                         handleSubmit={onSubmit}
                         isSubmitting={isSubmitting}
@@ -100,5 +87,5 @@ const CreateTask = () => {
     )
 }
 
-export default CreateTask
+export default EditTask
 

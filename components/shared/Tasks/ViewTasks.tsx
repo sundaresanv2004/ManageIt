@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table"
 import TaskStatusBadge from "./taskStatusBadge"
 import PriorityBadge from "./PriorityBadge"
-import { Calendar, MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
+import { Calendar, MoreHorizontal, Trash2 } from 'lucide-react'
 import {Status, Task} from "@prisma/client"
 import { Button } from "@/components/ui/button"
 import {
@@ -25,6 +25,7 @@ import {
     DropdownMenuSubTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Checkbox } from "@/components/ui/checkbox"
+import EditTask from "@/components/shared/Tasks/EditTask";
 
 interface TaskTableProps {
     tasks: Task[]
@@ -80,8 +81,7 @@ const ViewTasks: React.FC<TaskTableProps> = ({ tasks }) => {
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end">
                                         <DropdownMenuItem>
-                                            <Pencil className="mr-2 h-4 w-4" />
-                                            Edit
+                                            <EditTask task={task} />
                                         </DropdownMenuItem>
                                         <DropdownMenuItem className="text-red-600 dark:text-red-400">
                                             <Trash2 className="mr-2 h-4 w-4" />
