@@ -39,7 +39,7 @@ const ViewTabs = () => {
                     </TabsTrigger>
                 </TabsList>
                 <TabsContent value="grid" className="mt-6">
-                    <TaskGrid tasks={tasksList} />
+                    {tasksList ? <div className="text-center text-gray-500 dark:text-gray-400">No Task Available!</div> : <TaskGrid tasks={tasksList}/>}
                 </TabsContent>
                 <TabsContent value="table" className="mt-6">
                     <ViewTasks tasks={tasksList} />

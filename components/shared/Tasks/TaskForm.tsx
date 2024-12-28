@@ -1,6 +1,5 @@
 'use client'
 
-import React from 'react'
 import {
     Form,
     FormControl,
@@ -32,6 +31,7 @@ import { CalendarIcon, Loader2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {SheetClose, SheetFooter} from "@/components/ui/sheet";
+import { Separator } from "@/components/ui/separator"
 
 interface TaskFormProps {
     defaultValues: TaskSchemaType;
@@ -52,12 +52,12 @@ const TaskForm = ({
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6 mt-4 p-2">
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6 mt-4 p-2 flex flex-col h-full">
                 <div>
                     <FormField
                         control={form.control}
                         name="title"
-                        render={({ field }) => (
+                        render={({field}) => (
                             <FormItem>
                                 <FormLabel>Title</FormLabel>
                                 <FormControl>
@@ -66,7 +66,7 @@ const TaskForm = ({
                                         placeholder="Enter task title"
                                     />
                                 </FormControl>
-                                <FormMessage />
+                                <FormMessage/>
                             </FormItem>
                         )}
                     />
@@ -76,7 +76,7 @@ const TaskForm = ({
                     <FormField
                         control={form.control}
                         name="description"
-                        render={({ field }) => (
+                        render={({field}) => (
                             <FormItem>
                                 <FormLabel>Description</FormLabel>
                                 <FormControl>
@@ -87,7 +87,7 @@ const TaskForm = ({
                                         rows={4}
                                     />
                                 </FormControl>
-                                <FormMessage />
+                                <FormMessage/>
                             </FormItem>
                         )}
                     />
@@ -105,9 +105,9 @@ const TaskForm = ({
                                         <PopoverTrigger asChild>
                                             <FormControl>
                                                 <Button
-                                                    variant={"outline"}
+                                                    variant="outline"
                                                     className={cn(
-                                                        "pl-3 text-left font-normal w-full",
+                                                        "w-full pl-3 text-left font-normal",
                                                         !field.value && "text-muted-foreground"
                                                     )}
                                                 >
@@ -120,19 +120,16 @@ const TaskForm = ({
                                                 </Button>
                                             </FormControl>
                                         </PopoverTrigger>
-                                        <PopoverContent
-                                            className="w-auto p-0"
-                                            align="start"
-                                            side="bottom"
-                                        >
+                                        <PopoverContent className="w-auto p-0" align="start">
                                             <Calendar
                                                 mode="single"
-                                                selected={field.value}
+                                                selected={field.value ? field.value : undefined}
                                                 onSelect={field.onChange}
-                                                disabled={(date) =>
-                                                    date < new Date(Date.now() - 86400000) ||
-                                                    date > new Date(Date.now() + 63072000000)
-                                                }
+                                                disabled={(date) => {
+                                                    const today = new Date();
+                                                    today.setHours(0, 0, 0, 0);
+                                                    return date < today;
+                                                }}
                                                 initialFocus
                                             />
                                         </PopoverContent>
@@ -147,7 +144,7 @@ const TaskForm = ({
                         <FormField
                             control={form.control}
                             name="priority"
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <FormItem>
                                     <FormLabel>Priority</FormLabel>
                                     <Select
@@ -156,7 +153,7 @@ const TaskForm = ({
                                     >
                                         <FormControl>
                                             <SelectTrigger>
-                                                <SelectValue placeholder="Select priority" />
+                                                <SelectValue placeholder="Select priority"/>
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent
@@ -168,7 +165,7 @@ const TaskForm = ({
                                             <SelectItem value="HIGH">High</SelectItem>
                                         </SelectContent>
                                     </Select>
-                                    <FormMessage />
+                                    <FormMessage/>
                                 </FormItem>
                             )}
                         />
@@ -179,7 +176,7 @@ const TaskForm = ({
                     <FormField
                         control={form.control}
                         name="status"
-                        render={({ field }) => (
+                        render={({field}) => (
                             <FormItem>
                                 <FormLabel>Status</FormLabel>
                                 <Select
@@ -188,7 +185,7 @@ const TaskForm = ({
                                 >
                                     <FormControl>
                                         <SelectTrigger>
-                                            <SelectValue placeholder="Select a status" />
+                                            <SelectValue placeholder="Select a status"/>
                                         </SelectTrigger>
                                     </FormControl>
                                     <SelectContent
@@ -201,21 +198,26 @@ const TaskForm = ({
                                         <SelectItem value="ARCHIVED">Archived</SelectItem>
                                     </SelectContent>
                                 </Select>
-                                <FormMessage />
+                                <FormMessage/>
                             </FormItem>
                         )}
                     />
                 </div>
+                <div className="flex-grow"/>
+                <Separator className="my-4"/>
                 <SheetFooter>
-                    <div className="flex items-center w-full gap-3 mt-3 mb-3">
+                    <div className="flex items-center w-full gap-3">
                         <SheetClose asChild>
-                            <Button className={"w-full"} variant={"outline"} disabled={isSubmitting}>Cancel</Button>
+                            <Button className="w-full" variant="outline" disabled={isSubmitting}>
+                                Cancel
+                            </Button>
                         </SheetClose>
-                        <Button type="submit" className={`w-full`} disabled={isSubmitting}>
-                            {isSubmitting && (
-                                <Loader2 className="w-5 h-5 animate-spin" />
+                        <Button type="submit" className="w-full" disabled={isSubmitting}>
+                            {isSubmitting ? (
+                                <Loader2 className="w-5 h-5 animate-spin"/>
+                            ) : (
+                                "Save"
                             )}
-                            {isSubmitting? "Saving..." : "Save"}
                         </Button>
                     </div>
                 </SheetFooter>
