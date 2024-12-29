@@ -9,7 +9,7 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
-import { Plus, X } from 'lucide-react'
+import {Pencil, X} from 'lucide-react'
 import TaskForm from "@/components/shared/Tasks/TaskForm"
 import { taskSchema, TaskSchemaType } from "@/lib/zodSchema"
 import { useForm } from "react-hook-form"
@@ -61,16 +61,16 @@ const EditTask = ({ task }: { task: Task }) => {
     return (
         <Sheet open={isSheetOpen} onOpenChange={setSheetOpen}>
             <SheetTrigger asChild>
-                <Button>
-                    <Plus className="w-4 h-4 mr-2"/>
-                    Add Task
+                <Button variant="outline">
+                    <Pencil className="w-4 h-4 mr-2"/>
+                    Edit Task
                 </Button>
             </SheetTrigger>
             <SheetContent className="w-full sm:max-w-[600px] p-0 sm:rounded-l-lg overflow-auto">
                 <div className="h-full flex flex-col">
                     <SheetHeader className="flex-none p-6 sticky top-0 z-10 bg-background border-b">
                         <div className="flex items-center justify-between">
-                            <SheetTitle className="text-2xl font-bold">Create New Task</SheetTitle>
+                            <SheetTitle className="text-2xl font-bold">Edit Task</SheetTitle>
                             <Button variant="ghost" size="icon" onClick={() => setSheetOpen(false)}>
                                 <X className="h-4 w-4" />
                             </Button>
