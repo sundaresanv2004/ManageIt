@@ -60,7 +60,7 @@ const EditTask: React.FC<EditSheetProps> = ({ task, isOpen, onCloseSheet }) => {
             console.error(errorMessage);
             toast({
                 title: "Error",
-                description: `We encountered an issue while creating the task. Please try again later.`,
+                description: `We encountered an issue while updating the task. Please try again later.`,
                 variant: "destructive",
             });
         } finally {
@@ -77,7 +77,7 @@ const EditTask: React.FC<EditSheetProps> = ({ task, isOpen, onCloseSheet }) => {
                     <SheetHeader className="flex-none p-6 sticky top-0 z-10 bg-background border-b">
                         <div className="flex items-center justify-between">
                             <SheetTitle className="text-2xl font-bold">Edit Task</SheetTitle>
-                            <Button variant="ghost" size="icon" onClick={() => onCloseSheet()}>
+                            <Button variant="ghost" size="icon" onClick={onCloseSheet}>
                                 <X className="h-4 w-4" />
                             </Button>
                         </div>

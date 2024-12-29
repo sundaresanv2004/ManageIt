@@ -126,10 +126,7 @@ const TaskGrid: React.FC<TaskGridProps> = ({ tasks }) => {
                 <EditTask
                     task={selectedTask}
                     isOpen={isEditSheetOpen}
-                    onCloseSheet={() => {
-                        setIsEditSheetOpen(false)
-                        setSelectedTask(null)
-                    }}
+                    onCloseSheet={() => setIsEditSheetOpen(false)}
                 />
             )}
         </>
