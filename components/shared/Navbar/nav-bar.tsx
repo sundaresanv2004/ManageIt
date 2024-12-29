@@ -6,13 +6,11 @@ import {
   LogOut,
   Menu,
   Plus,
-  Search,
   Settings,
   Sparkles,
   User
 } from 'lucide-react'
 
-import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
@@ -29,6 +27,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import Breadcrumb from "@/components/shared/Breadcrumb";
 
 
 export function NavBar() {
@@ -36,18 +35,10 @@ export function NavBar() {
       <div className="border-b">
         <div className="flex h-16 items-center px-4 justify-between">
           <div className="flex items-center">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center justify-center space-x-4">
               <SidebarTrigger className="-ml-1"/>
               <Separator orientation="vertical" className="mr-2 h-4"/>
-            </div>
-            <div className="flex items-center space-x-6 px-6">
-              <div className="relative">
-                <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground"/>
-                <Input
-                    placeholder="Search..."
-                    className="max-w-80 w-full pl-8"
-                />
-              </div>
+              <Breadcrumb />
             </div>
           </div>
 

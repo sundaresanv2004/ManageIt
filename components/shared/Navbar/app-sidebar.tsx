@@ -6,11 +6,12 @@ import {
   Home,
   ListChecks,
   User,
-  ClipboardCheck,
+  Bookmark,
   LaptopMinimalCheck,
   Frame,
   Map,
   PieChart,
+  FileWarning
 } from 'lucide-react'
 import { NavMain } from "./nav-main"
 import { NavProjects } from "./nav-projects"
@@ -33,7 +34,7 @@ const data = {
     },
     {
       title: "Completed",
-      url: "#",
+      url: "/dashboard/completed/",
       icon: ListChecks,
     },
     {
@@ -43,8 +44,13 @@ const data = {
     },
     {
       title: "Important",
-      url: "#",
-      icon: ClipboardCheck,
+      url: "/dashboard/important/",
+      icon: Bookmark,
+    },
+    {
+      title: "Overdue",
+      url: "/dashboard/overdue/",
+      icon: FileWarning,
     },
     {
       title: "Personal",
