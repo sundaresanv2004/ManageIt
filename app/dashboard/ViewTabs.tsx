@@ -19,6 +19,7 @@ const ViewTabs = () => {
     } = useSWR<Task[]>("/api/tasks", fetcher);
 
     if (isLoading) return <Loading />;
+    if (error) return <Error error={error} reset={() => window.location.reload()} />;
 
     const tasksList = tasks || [];
     return (
@@ -39,10 +40,18 @@ const ViewTabs = () => {
                     </TabsTrigger>
                 </TabsList>
                 <TabsContent value="grid" className="mt-6">
-                    {tasksList ? <div className="text-center text-gray-500 dark:text-gray-400">No Task Available!</div> : <TaskGrid tasks={tasksList}/>}
+                    {tasksList.length === 0 ? (
+                        <div className="text-center text-gray-500 dark:text-gray-400">No Task Available!</div>
+                    ) : (
+                        <TaskGrid tasks={tasksList}/>
+                    )}
                 </TabsContent>
                 <TabsContent value="table" className="mt-6">
-                    <ViewTasks tasks={tasksList} />
+                    {tasksList.length === 0 ? (
+                        <div className="text-center text-gray-500 dark:text-gray-400">No Task Available!</div>
+                    ) : (
+                        <ViewTasks tasks={tasksList}/>
+                    )}
                 </TabsContent>
                 <TabsContent value="kanban" className="mt-6">
                     <div className="text-center text-gray-500 dark:text-gray-400">Kanban View Coming Soon</div>
