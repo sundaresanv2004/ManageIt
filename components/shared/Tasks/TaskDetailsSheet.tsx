@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, {useState} from 'react'
 import { Task } from "@prisma/client"
 import {
   Sheet,
@@ -8,11 +8,11 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
-import { Calendar, Clock, Trash2, X } from 'lucide-react'
+import { Calendar, Clock, Pencil, Trash2, X } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import PriorityBadge from "./PriorityBadge"
 import TaskStatusBadge from "./taskStatusBadge"
-import EditTask from "@/components/shared/Tasks/EditTask"
+import EditTask from "@/components/shared/Tasks/EditTask";
 
 interface TaskDetailsSheetProps {
   task: Task | null
@@ -21,13 +21,14 @@ interface TaskDetailsSheetProps {
 }
 
 const TaskDetailsSheet: React.FC<TaskDetailsSheetProps> = ({ task, isOpen, onClose }) => {
+  const [isEditSheetOpen, setIsEditSheetOpen] = useState<boolean>(false)
   if (!task) return null
 
   const getTimeLeft = () => {
     if (!task.dueDate) return null
     const now = new Date()
     const due = new Date(task.dueDate)
-    due.setHours(23, 59, 59, 999) // Set to end of the day
+    due.setHours(23, 59, 59, 999)
     const diff = due.getTime() - now.getTime()
 
     if (diff < 0) return "Overdue"
@@ -39,8 +40,13 @@ const TaskDetailsSheet: React.FC<TaskDetailsSheetProps> = ({ task, isOpen, onClo
 
     if (days > 0) return `${days} day${days > 1 ? 's' : ''} left`
     if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''} left`
-    return `${minutes} minute${minutes > 1 ? 's' : ''} left`
+    return `${minutes} min${minutes > 1 ? '\'s' : ''} left`
   }
+
+  const handleEditClick = () => {
+    onClose();
+    setIsEditSheetOpen(true);
+  };
 
   return (
       <Sheet open={isOpen} onOpenChange={onClose}>
@@ -135,9 +141,10 @@ const TaskDetailsSheet: React.FC<TaskDetailsSheetProps> = ({ task, isOpen, onClo
                 <Button
                     variant="outline"
                     className="w-full"
-                    onClick={() => {}}
+                    onClick={handleEditClick}
                 >
-                  <EditTask task={task} />
+                  <Pencil className="h-4 w-4 mr-2" />
+                  Edit
                 </Button>
                 <Button
                     variant="destructive"
@@ -150,6 +157,15 @@ const TaskDetailsSheet: React.FC<TaskDetailsSheetProps> = ({ task, isOpen, onClo
               </div>
             </div>
           </div>
+          {isEditSheetOpen && (
+              <EditTask
+                  task={task}
+                  isOpen={isEditSheetOpen}
+                  onCloseSheet={() => {
+                    setIsEditSheetOpen(false);
+                  }}
+              />
+          )}
         </SheetContent>
       </Sheet>
   )

@@ -3,11 +3,13 @@
 import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { XCircle, RotateCcw, Home, AlertCircle } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 export default function Error({ error, reset,}: {
     error: Error & { digest?: string }
     reset: () => void
 }) {
+    const router = useRouter();
     useEffect(() => {
         console.error(error)
     }, [error])
@@ -50,7 +52,7 @@ export default function Error({ error, reset,}: {
                         </Button>
                         <Button
                             variant="outline"
-                            onClick={() => window.location.href = '/'}
+                            onClick={() => router.push('/')}
                             className="gap-2"
                         >
                             <Home className="w-4 h-4" />

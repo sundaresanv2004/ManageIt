@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Checkbox } from "@/components/ui/checkbox"
 import TaskDetailsSheet from "./TaskDetailsSheet"
+import EditTask from "@/components/shared/Tasks/EditTask";
 
 interface TaskTableProps {
     tasks: Task[]
@@ -34,15 +35,16 @@ interface TaskTableProps {
 const ViewTasks: React.FC<TaskTableProps> = ({ tasks }) => {
     const [selectedTask, setSelectedTask] = useState<Task | null>(null)
     const [isDetailsSheetOpen, setIsDetailsSheetOpen] = useState(false)
+    const [isEditSheetOpen, setEditSheetOpen] = useState(false)
 
     const handleTaskClick = (task: Task) => {
         setSelectedTask(task)
         setIsDetailsSheetOpen(true)
     }
 
-    const handleEditClick = (e: Event, task: Task) => {
-        e.stopPropagation()
+    const handleEditClick = (task: Task) => {
         setSelectedTask(task)
+        setEditSheetOpen(true)
     }
 
     return (
@@ -97,7 +99,7 @@ const ViewTasks: React.FC<TaskTableProps> = ({ tasks }) => {
                                             </Button>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent align="end">
-                                            <DropdownMenuItem onSelect={(e) => handleEditClick(e, task)}>
+                                            <DropdownMenuItem onSelect={() => handleEditClick(task)}>
                                                 <Pencil className="mr-2 h-4 w-4" />
                                                 Edit
                                             </DropdownMenuItem>
@@ -127,6 +129,13 @@ const ViewTasks: React.FC<TaskTableProps> = ({ tasks }) => {
                 isOpen={isDetailsSheetOpen}
                 onClose={() => setIsDetailsSheetOpen(false)}
             />
+            {selectedTask && (
+                <EditTask
+                    task={selectedTask}
+                    isOpen={isEditSheetOpen}
+                    onCloseSheet={() => setEditSheetOpen(false)}
+                />
+            )}
         </>
     )
 }

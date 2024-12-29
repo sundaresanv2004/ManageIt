@@ -84,7 +84,7 @@ const TaskForm = ({
                                             {...field}
                                             placeholder="Write a note"
                                             className="resize-none border-muted-foreground/20 shadow-sm"
-                                            rows={4}
+                                            rows={6}
                                         />
                                     </FormControl>
                                     <FormMessage/>

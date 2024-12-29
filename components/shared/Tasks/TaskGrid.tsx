@@ -5,7 +5,7 @@ import { Task, Status } from "@prisma/client"
 import TaskStatusBadge from "./taskStatusBadge"
 import PriorityBadge from "./PriorityBadge"
 import TaskDetailsSheet from "./TaskDetailsSheet"
-import { Calendar, Clock, MoreHorizontal, Trash2, Check } from 'lucide-react'
+import { Calendar, Clock, MoreHorizontal, Trash2, Check, Pencil } from 'lucide-react'
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import {
@@ -28,6 +28,12 @@ interface TaskGridProps {
 const TaskGrid: React.FC<TaskGridProps> = ({ tasks }) => {
     const [selectedTask, setSelectedTask] = useState<Task | null>(null)
     const [isSheetOpen, setIsSheetOpen] = useState(false)
+    const [isEditSheetOpen, setIsEditSheetOpen] = useState(false)
+
+    const handleEditClick = (task: Task) => {
+        setSelectedTask(task);
+        setIsEditSheetOpen(true);
+    }
 
     const handleTaskClick = (task: Task) => {
         setSelectedTask(task)
@@ -59,9 +65,10 @@ const TaskGrid: React.FC<TaskGridProps> = ({ tasks }) => {
                                             <MoreHorizontal className="h-4 w-4" />
                                         </Button>
                                     </DropdownMenuTrigger>
-                                    <DropdownMenuContent align="end">
-                                        <DropdownMenuItem>
-                                            <EditTask task={task} />
+                                    <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
+                                        <DropdownMenuItem onSelect={() => handleEditClick(task)}>
+                                            <Pencil className="mr-2 h-4 w-4" />
+                                            Edit
                                         </DropdownMenuItem>
                                         <DropdownMenuItem className="text-red-600 dark:text-red-400">
                                             <Trash2 className="mr-2 h-4 w-4" />
@@ -115,6 +122,16 @@ const TaskGrid: React.FC<TaskGridProps> = ({ tasks }) => {
                 isOpen={isSheetOpen}
                 onClose={() => setIsSheetOpen(false)}
             />
+            {selectedTask && (
+                <EditTask
+                    task={selectedTask}
+                    isOpen={isEditSheetOpen}
+                    onCloseSheet={() => {
+                        setIsEditSheetOpen(false)
+                        setSelectedTask(null)
+                    }}
+                />
+            )}
         </>
     )
 }

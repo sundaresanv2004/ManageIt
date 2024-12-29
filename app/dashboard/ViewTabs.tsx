@@ -6,12 +6,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import ViewTasks from "@/components/shared/Tasks/ViewTasks"
 import { LayoutGrid, List, Columns } from 'lucide-react'
 import TaskGrid from "@/components/shared/Tasks/TaskGrid";
-import {Task} from "@prisma/client";
+import {Status, Task} from "@prisma/client";
 import Loading from "@/app/dashboard/loading";
+import { useRouter } from 'next/navigation'
+import Error from "./error";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const ViewTabs = () => {
+    const router = useRouter();
     const {
         data: tasks,
         error,
@@ -19,9 +22,11 @@ const ViewTabs = () => {
     } = useSWR<Task[]>("/api/tasks", fetcher);
 
     if (isLoading) return <Loading />;
-    if (error) return <Error error={error} reset={() => window.location.reload()} />;
+    if (error) return <Error error={error} reset={() => router.refresh()} />;
 
-    const tasksList = tasks || [];
+    const tasksList = (tasks || []).filter(task => task.status !== Status.DONE);
+
+
     return (
         <div className="w-full max-w-7xl mx-auto">
             <Tabs defaultValue="grid">
