@@ -1,22 +1,23 @@
 'use client'
 
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import {
     Sheet,
     SheetContent,
-    SheetDescription,
     SheetHeader,
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
-import {Pencil} from 'lucide-react'
+import { Button } from "@/components/ui/button"
+import { Plus, X } from 'lucide-react'
 import TaskForm from "@/components/shared/Tasks/TaskForm"
-import {taskSchema, TaskSchemaType} from "@/lib/zodSchema"
-import {useForm} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {useToast} from "@/hooks/use-toast";
-import { mutate } from "swr";
+import { taskSchema, TaskSchemaType } from "@/lib/zodSchema"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useToast } from "@/hooks/use-toast"
+import { mutate } from "swr"
 import {Task} from "@prisma/client";
+
 
 const EditTask = ({ task }: { task: Task }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,8 +35,14 @@ const EditTask = ({ task }: { task: Task }) => {
                 ...values,
                 dueDate: values.dueDate ? new Date(values.dueDate) : null,
             };
+
             console.log(sanitizedValues);
 
+            toast({
+                title: "Task Updated",
+                description: "Your task was successfully updated.",
+            });
+            // await mutate("/api/tasks");
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : 'Something went wrong. Please try again later.';
             console.error(errorMessage);
@@ -51,41 +58,42 @@ const EditTask = ({ task }: { task: Task }) => {
         }
     };
 
-
     return (
         <Sheet open={isSheetOpen} onOpenChange={setSheetOpen}>
             <SheetTrigger asChild>
-                <a className="flex items-center gap-2">
-                    <Pencil className="h-4 w-4" />
-                    Edit
-                </a>
+                <Button>
+                    <Plus className="w-4 h-4 mr-2"/>
+                    Add Task
+                </Button>
             </SheetTrigger>
-            <SheetContent
-                className={"flex flex-col w-full sm:max-w-[540px] sm:rounded-l-[10px] mt-auto sm:mt-0"}
-            >
-                <SheetHeader className="space-y-2">
-                    <SheetTitle>Create Task</SheetTitle>
-                    <SheetDescription>
-                        Add a new task to your list.
-                    </SheetDescription>
-                </SheetHeader>
+            <SheetContent className="w-full sm:max-w-[600px] p-0 sm:rounded-l-lg overflow-auto">
                 <div className="h-full flex flex-col">
-                    <TaskForm
-                        defaultValues={{
-                            title: task.title,
-                            description: task.description || "",
-                            status: task.status,
-                            priority: task.priority,
-                            dueDate: task.dueDate ? new Date(task.dueDate) : null
-                        }}
-                        handleSubmit={onSubmit}
-                        isSubmitting={isSubmitting}
-                    />
+                    <SheetHeader className="flex-none p-6 sticky top-0 z-10 bg-background border-b">
+                        <div className="flex items-center justify-between">
+                            <SheetTitle className="text-2xl font-bold">Create New Task</SheetTitle>
+                            <Button variant="ghost" size="icon" onClick={() => setSheetOpen(false)}>
+                                <X className="h-4 w-4" />
+                            </Button>
+                        </div>
+                    </SheetHeader>
+                    <div className="flex-1">
+                        <TaskForm
+                            defaultValues={{
+                                title: task.title,
+                                description: task.description || "",
+                                status: task.status,
+                                priority: task.priority,
+                                dueDate: task.dueDate ? new Date(task.dueDate) : null
+                            }}
+                            handleSubmit={onSubmit}
+                            isSubmitting={isSubmitting}
+                        />
+                    </div>
                 </div>
             </SheetContent>
         </Sheet>
     )
 }
 
-export default EditTask
+export default EditTask;
 
