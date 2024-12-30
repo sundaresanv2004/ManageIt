@@ -18,7 +18,7 @@ import { mutate } from "swr"
 import {Task} from "@prisma/client";
 
 interface EditSheetProps {
-    task?: Task
+    task: Task
     isOpen: boolean
     onCloseSheet: () => void
 }
@@ -37,7 +37,7 @@ const EditTask: React.FC<EditSheetProps> = ({ task, isOpen, onCloseSheet }) => {
             const sanitizedValues = {
                 ...values,
                 dueDate: values.dueDate ? new Date(values.dueDate) : null,
-                id: task?.id || "",
+                id: task.id || "",
             };
 
             const res = await fetch('/api/tasks', {
@@ -85,11 +85,11 @@ const EditTask: React.FC<EditSheetProps> = ({ task, isOpen, onCloseSheet }) => {
                     <div className="flex-1">
                         <TaskForm
                             defaultValues={{
-                                title: task?.title || "",
-                                description: task?.description || "",
-                                status: task?.status || "TODO",
-                                priority: task?.priority || "LOW",
-                                dueDate: task?.dueDate ? new Date(task.dueDate) : null
+                                title: task.title,
+                                description: task.description || "",
+                                status: task.status,
+                                priority: task.priority,
+                                dueDate: task.dueDate ? new Date(task.dueDate) : null
                             }}
                             handleSubmit={onSubmit}
                             isSubmitting={isSubmitting}

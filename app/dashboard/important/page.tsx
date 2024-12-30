@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import ViewTasks from "@/components/shared/Tasks/ViewTasks"
 import { LayoutGrid, List, Columns } from 'lucide-react'
 import TaskGrid from "@/components/shared/Tasks/TaskGrid"
-import { Task } from "@prisma/client"
+import {Status, Task} from "@prisma/client"
 import Loading from "@/app/dashboard/loading"
 import { useRouter } from 'next/navigation'
 import Error from "@/app/dashboard/error"
@@ -24,7 +24,8 @@ export default function HighPriorityTasks() {
     if (isLoading) return <Loading />
     if (error) return <Error error={error} reset={() => router.refresh()} />
 
-    const highPriorityTasks = (tasks || []).filter(task => task.priority === 'HIGH')
+    const highPriorityTasks = (tasks || []).filter(task =>
+        task.priority === 'HIGH' && task.status !== Status.DONE)
 
     return (
         <div className="h-auto">

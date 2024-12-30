@@ -11,22 +11,11 @@ import {
 } from "@/components/ui/table"
 import TaskStatusBadge from "./taskStatusBadge"
 import PriorityBadge from "./PriorityBadge"
-import { Calendar, MoreHorizontal, Trash2, Pencil } from 'lucide-react'
-import { Status, Task } from "@prisma/client"
-import { Button } from "@/components/ui/button"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
-} from "@/components/ui/dropdown-menu"
+import { Calendar } from 'lucide-react'
+import { Task } from "@prisma/client"
 import { Checkbox } from "@/components/ui/checkbox"
 import TaskDetailsSheet from "./TaskDetailsSheet"
-import EditTask from "@/components/shared/Tasks/EditTask";
+import MoreOption from "@/components/shared/Tasks/MoreOption";
 
 interface TaskTableProps {
     tasks: Task[]
@@ -35,16 +24,10 @@ interface TaskTableProps {
 const ViewTasks: React.FC<TaskTableProps> = ({ tasks }) => {
     const [selectedTask, setSelectedTask] = useState<Task | null>(null)
     const [isDetailsSheetOpen, setIsDetailsSheetOpen] = useState(false)
-    const [isEditSheetOpen, setEditSheetOpen] = useState(false)
 
     const handleTaskClick = (task: Task) => {
         setSelectedTask(task)
         setIsDetailsSheetOpen(true)
-    }
-
-    const handleEditClick = (task: Task) => {
-        setSelectedTask(task)
-        setEditSheetOpen(true)
     }
 
     return (
@@ -91,33 +74,7 @@ const ViewTasks: React.FC<TaskTableProps> = ({ tasks }) => {
                                     )}
                                 </TableCell>
                                 <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
-                                    <DropdownMenu>
-                                        <DropdownMenuTrigger asChild>
-                                            <Button variant="ghost" className="h-8 w-8 p-0">
-                                                <span className="sr-only">Open menu</span>
-                                                <MoreHorizontal className="h-4 w-4" />
-                                            </Button>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent align="end">
-                                            <DropdownMenuItem onSelect={() => handleEditClick(task)}>
-                                                <Pencil className="mr-2 h-4 w-4" />
-                                                Edit
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem className="text-red-600 dark:text-red-400">
-                                                <Trash2 className="mr-2 h-4 w-4" />
-                                                Delete
-                                            </DropdownMenuItem>
-                                            <DropdownMenuSeparator />
-                                            <DropdownMenuSub>
-                                                <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger>
-                                                <DropdownMenuSubContent>
-                                                    {Object.values(Status).map((status) => (
-                                                        <DropdownMenuItem key={status}>{status}</DropdownMenuItem>
-                                                    ))}
-                                                </DropdownMenuSubContent>
-                                            </DropdownMenuSub>
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
+                                    <MoreOption task={task} />
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -129,13 +86,6 @@ const ViewTasks: React.FC<TaskTableProps> = ({ tasks }) => {
                 isOpen={isDetailsSheetOpen}
                 onClose={() => setIsDetailsSheetOpen(false)}
             />
-            {selectedTask && (
-                <EditTask
-                    task={selectedTask}
-                    isOpen={isEditSheetOpen}
-                    onCloseSheet={() => setEditSheetOpen(false)}
-                />
-            )}
         </>
     )
 }
