@@ -1,6 +1,6 @@
 "use client"
 
-import { Folder, Forward, MoreHorizontal, Plus, Trash2, TypeIcon as type, LucideIcon } from 'lucide-react'
+import { Folder, Forward, MoreHorizontal, Plus, Trash2, LucideIcon } from 'lucide-react'
 
 import { Button } from "@/components/ui/button"
 import {

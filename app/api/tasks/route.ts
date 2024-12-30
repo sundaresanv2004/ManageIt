@@ -77,3 +77,26 @@ export async function PUT(request: NextRequest) {
         return NextResponse.json({ message: 'An unexpected error occurred' }, { status: 500 });
     }
 }
+
+export async function DELETE(request: NextRequest) {
+    try {
+        const id = request.nextUrl.searchParams.get('id');
+
+        if (!id) {
+            return NextResponse.json({ message: 'Task ID is required' }, { status: 400 });
+        }
+
+        const deletedTodo = await prisma.task.delete({
+            where: { id },
+        });
+
+        if (!deletedTodo) {
+            return NextResponse.json({ message: 'Task not found' }, { status: 404 });
+        }
+
+        return NextResponse.json({ message: 'Task deleted successfully' }, { status: 200 });
+    } catch (error) {
+        console.error('Error deleting task:', error);
+        return NextResponse.json({ message: 'An unexpected error occurred' }, { status: 500 });
+    }
+}

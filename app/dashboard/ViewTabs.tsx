@@ -28,7 +28,7 @@ const ViewTabs = () => {
 
 
     return (
-        <div className="w-full max-w-7xl mx-auto">
+        <div className="w-full max-w-7xl mx-auto p-4">
             <Tabs defaultValue="grid">
                 <TabsList>
                     <TabsTrigger value="grid">

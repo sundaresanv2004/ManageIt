@@ -30,7 +30,12 @@ const TaskGrid: React.FC<TaskGridProps> = ({ tasks }) => {
                     <Card
                         key={task.id}
                         className="overflow-hidden group transition-all duration-300 ease-in-out hover:shadow-md hover:-translate-y-1 cursor-pointer"
-                        onClick={() => handleTaskClick(task)}
+                        onClick={(e) => {
+                            // Don't open details if clicking more options
+                            if (!(e.target as HTMLElement).closest('[data-more-options]')) {
+                                handleTaskClick(task)
+                            }
+                        }}
                     >
                         <CardHeader className="pb-2">
                             <div className="flex justify-between items-start">
@@ -41,7 +46,9 @@ const TaskGrid: React.FC<TaskGridProps> = ({ tasks }) => {
                                     />
                                     <h3 className="text-lg font-semibold line-clamp-2">{task.title}</h3>
                                 </div>
-                                <MoreOption task={task} />
+                                <div data-more-options onClick={(e) => e.stopPropagation()}>
+                                    <MoreOption task={task} />
+                                </div>
                             </div>
                         </CardHeader>
                         <CardContent className="pb-2">
@@ -81,4 +88,3 @@ const TaskGrid: React.FC<TaskGridProps> = ({ tasks }) => {
 }
 
 export default TaskGrid
-

@@ -92,7 +92,7 @@ const TaskDetailsSheet: React.FC<TaskDetailsSheetProps> = ({ task, isOpen, onClo
                       <span className="font-medium">Time Remaining</span>
                     </div>
                     <span className="text-sm">
-                    {task.dueDate ? getTimeLeft() : 'No due date'}
+                    {(task.status === "DONE") ? <>Completed</> : <>{task.dueDate ? getTimeLeft() : 'No due date'}</>}
                   </span>
                   </div>
                 </div>

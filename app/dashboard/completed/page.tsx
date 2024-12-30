@@ -29,7 +29,6 @@ export default function CompletedTasks() {
     return (
         <div className="h-auto">
             <div className="flex flex-1 flex-col gap-4 p-4 max-w-7xl mx-auto">
-                <h1 className="text-2xl font-bold mb-4">Completed Tasks</h1>
                 <Tabs defaultValue="grid">
                     <TabsList>
                         <TabsTrigger value="grid">

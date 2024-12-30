@@ -5,7 +5,7 @@ export default function Page() {
 
     return (
         <div className="h-auto">
-            <div className="flex flex-1 flex-col gap-4 p-4 max-w-7xl mx-auto">
+            <div className="flex flex-1 flex-col gap-4 max-w-7xl mx-auto">
                 <ViewTabs />
             </div>
         </div>

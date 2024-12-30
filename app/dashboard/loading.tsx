@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 export default function Loading() {
     return (
-        <div className="w-full max-w-7xl mx-auto space-y-6">
+        <div className="w-full max-w-7xl mx-auto space-y-6 p-4">
             <div className="flex gap-1">
                 <Skeleton className="h-10 w-[120px]" />
                 <Skeleton className="h-10 w-[120px]" />
