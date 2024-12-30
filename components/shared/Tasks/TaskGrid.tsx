@@ -7,8 +7,8 @@ import PriorityBadge from "./PriorityBadge"
 import TaskDetailsSheet from "./TaskDetailsSheet"
 import { Calendar, Clock } from 'lucide-react'
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
-import MoreOption from "@/components/shared/Tasks/MoreOption";
+import MoreOption from "@/components/shared/Tasks/MoreOption"
+import CheckBox from "@/components/shared/Tasks/CheckBox"
 
 interface TaskGridProps {
     tasks: Task[]
@@ -31,8 +31,9 @@ const TaskGrid: React.FC<TaskGridProps> = ({ tasks }) => {
                         key={task.id}
                         className="overflow-hidden group transition-all duration-300 ease-in-out hover:shadow-md hover:-translate-y-1 cursor-pointer"
                         onClick={(e) => {
-                            // Don't open details if clicking more options
-                            if (!(e.target as HTMLElement).closest('[data-more-options]')) {
+                            // Don't open details if clicking more options or checkbox
+                            if (!(e.target as HTMLElement).closest('[data-more-options]') &&
+                                !(e.target as HTMLElement).closest('[data-checkbox]')) {
                                 handleTaskClick(task)
                             }
                         }}
@@ -40,10 +41,9 @@ const TaskGrid: React.FC<TaskGridProps> = ({ tasks }) => {
                         <CardHeader className="pb-2">
                             <div className="flex justify-between items-start">
                                 <div className="flex items-center space-x-2">
-                                    <Checkbox
-                                        checked={task.status === Status.DONE}
-                                        onClick={(e) => e.stopPropagation()}
-                                    />
+                                    <div data-checkbox onClick={(e) => e.stopPropagation()}>
+                                        <CheckBox task={task} />
+                                    </div>
                                     <h3 className="text-lg font-semibold line-clamp-2">{task.title}</h3>
                                 </div>
                                 <div data-more-options onClick={(e) => e.stopPropagation()}>

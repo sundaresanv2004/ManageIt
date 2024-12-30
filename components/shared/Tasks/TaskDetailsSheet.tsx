@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button"
 import PriorityBadge from "./PriorityBadge"
 import TaskStatusBadge from "./taskStatusBadge"
 import EditTask from "@/components/shared/Tasks/EditTask"
+import DeleteTask from "@/components/shared/Tasks/DeleteTask";
 
 interface TaskDetailsSheetProps {
   task: Task | null
@@ -22,6 +23,7 @@ interface TaskDetailsSheetProps {
 
 const TaskDetailsSheet: React.FC<TaskDetailsSheetProps> = ({ task, isOpen, onClose }) => {
   const [isEditSheetOpen, setIsEditSheetOpen] = useState<boolean>(false)
+  const [isDeleteOpen, setDeleteIsOpen] = useState(false)
 
   if (!task) return null
 
@@ -150,7 +152,10 @@ const TaskDetailsSheet: React.FC<TaskDetailsSheetProps> = ({ task, isOpen, onClo
                   <Button
                       variant="destructive"
                       className="w-full"
-                      onClick={() => {}}
+                      onClick={() => {
+                        onClose();
+                        setDeleteIsOpen(true)}
+                  }
                   >
                     <Trash2 className="h-4 w-4 mr-2" />
                     Delete
@@ -164,6 +169,11 @@ const TaskDetailsSheet: React.FC<TaskDetailsSheetProps> = ({ task, isOpen, onClo
             task={task}
             isOpen={isEditSheetOpen}
             onCloseSheet={() => setIsEditSheetOpen(false)}
+        />
+        <DeleteTask
+            id={task.id}
+            isOpen={isDeleteOpen}
+            onClose={() => setDeleteIsOpen(false)}
         />
       </>
   )

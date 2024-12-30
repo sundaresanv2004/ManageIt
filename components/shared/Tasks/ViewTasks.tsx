@@ -13,9 +13,9 @@ import TaskStatusBadge from "./taskStatusBadge"
 import PriorityBadge from "./PriorityBadge"
 import { Calendar } from 'lucide-react'
 import { Task } from "@prisma/client"
-import { Checkbox } from "@/components/ui/checkbox"
 import TaskDetailsSheet from "./TaskDetailsSheet"
 import MoreOption from "@/components/shared/Tasks/MoreOption";
+import CheckBox from "@/components/shared/Tasks/CheckBox";
 
 interface TaskTableProps {
     tasks: Task[]
@@ -52,9 +52,7 @@ const ViewTasks: React.FC<TaskTableProps> = ({ tasks }) => {
                                 onClick={() => handleTaskClick(task)}
                             >
                                 <TableCell onClick={(e) => e.stopPropagation()}>
-                                    <Checkbox
-                                        checked={task.status === "DONE"}
-                                    />
+                                    <CheckBox task={task} />
                                 </TableCell>
                                 <TableCell className="font-medium">{task.title}</TableCell>
                                 <TableCell className="hidden md:table-cell">
