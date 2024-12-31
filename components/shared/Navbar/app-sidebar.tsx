@@ -52,28 +52,6 @@ const data = {
       url: "/dashboard/overdue/",
       icon: FileWarning,
     },
-    {
-      title: "Personal",
-      url: "#",
-      icon: User,
-    },
-  ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
   ],
 }
 
@@ -100,7 +78,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavProjects />
       </SidebarContent>
       <SidebarFooter>
         <NavFooter />

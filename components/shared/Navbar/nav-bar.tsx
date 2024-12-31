@@ -5,7 +5,6 @@ import {
   Bell,
   LogOut,
   Menu,
-  Plus,
   Settings,
   Sparkles,
   User
@@ -28,6 +27,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import Breadcrumb from "@/components/shared/Breadcrumb";
+import {ComingSoonDialog} from "@/components/shared/coming-soon-dialog";
 
 
 export function NavBar() {
@@ -61,11 +61,7 @@ export function NavBar() {
                   </div>
                 </div>
                 <div className="grid gap-4 py-4">
-                  <Button className="justify-start" onClick={() => {
-                  }}>
-                    <Plus className="mr-2 h-4 w-4"/>
-                    New Project
-                  </Button>
+                  <ComingSoonDialog />
                   <Button variant="ghost" className="justify-start" onClick={() => {
                   }}>
                     <Bell className="mr-2 h-5 w-5"/>
@@ -99,10 +95,7 @@ export function NavBar() {
           </div>
 
           <div className="ml-auto flex items-center space-x-4 max-md:hidden">
-            <Button>
-              <Plus className="h-4 w-4"/>
-              New Project
-            </Button>
+            <ComingSoonDialog />
             <Button variant="ghost">
               <Bell className="h-5 w-5"/>
             </Button>
