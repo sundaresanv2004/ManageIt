@@ -2,19 +2,19 @@
 
 import * as React from "react"
 import {
-  Bell,
+  Bell, LogIn,
   LogOut,
   Menu,
   Settings,
   Sparkles,
   User
 } from 'lucide-react'
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
-  DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
@@ -28,9 +28,13 @@ import {
 } from "@/components/ui/sheet"
 import Breadcrumb from "@/components/shared/Breadcrumb";
 import {ComingSoonDialog} from "@/components/shared/coming-soon-dialog";
+import {useSession} from "next-auth/react";
+import Link from "next/link";
 
 
 export function NavBar() {
+  const { status, data: session } = useSession()
+
   return (
       <div className="border-b">
         <div className="flex h-16 items-center px-4 justify-between">
@@ -102,7 +106,7 @@ export function NavBar() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Avatar>
-                  <AvatarImage src="/placeholder.svg" alt="User"/>
+                  <AvatarImage src={session?.user?.image || ""} alt="User"/>
                   <AvatarFallback>AK</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
@@ -114,37 +118,27 @@ export function NavBar() {
                 <DropdownMenuLabel className="p-0 font-normal">
                   <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                     <Avatar className="h-8 w-8 rounded-lg">
-                      <AvatarImage src="/placeholder.svg" alt="User"/>
-                      <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                      <AvatarImage src={session?.user?.image || ""} alt="User"/>
+                      <AvatarFallback className="rounded-lg">{session?.user?.name?.charAt(0).toUpperCase()}</AvatarFallback>
                     </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-semibold">Akkshay Kumar</span>
-                      <span className="truncate text-xs">sundaresanv16@gmail.com</span>
+                      <span className="truncate font-semibold">{session?.user?.name}</span>
+                      <span className="truncate text-xs">{session?.user?.email}</span>
                     </div>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator/>
-                <DropdownMenuGroup>
-                  <DropdownMenuItem>
-                    <Sparkles/>
-                    Upgrade to Pro
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator/>
-                <DropdownMenuGroup>
-                  <DropdownMenuItem>
-                    <User/>
-                    Profile
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Settings />
-                    Settings
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator/>
                 <DropdownMenuItem>
-                  <LogOut/>
-                  Log out
+                  { status === "authenticated" ?
+                      <Link href="/api/auth/signout" className="flex items-center justify-center">
+                        <LogOut className="mr-2 h-4 w-4" />
+                        Log out
+                      </Link> :
+                      <Link href="/api/auth/signin" className="flex items-center justify-center">
+                        <LogIn className="mr-2 h-4 w-4" />
+                        Log In
+                      </Link>
+                  }
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

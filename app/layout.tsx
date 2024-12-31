@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import {ThemeProvider} from "next-themes";
 import {Toaster} from "@/components/ui/toaster";
+import AuthProvider from "@/app/auth/Provider";
 
 const SpaceGrotesk = localFont({
   src: "./fonts/SpaceGrotesk.woff",
@@ -26,7 +27,9 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
           enableSystem
           disableTransitionOnChange
       >
-        {children}
+          <AuthProvider>
+              {children}
+          </AuthProvider>
           <Toaster />
       </ThemeProvider>
       </body>
