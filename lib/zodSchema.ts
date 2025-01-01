@@ -16,3 +16,9 @@ export const taskSchema = z.object({
 });
 
 export type TaskSchemaType = z.infer<typeof taskSchema>;
+
+export const userAuthSchema = z.object({
+    email: z.string().email(),
+})
+
+export type UserAuthSchemaType = z.infer<typeof userAuthSchema>;

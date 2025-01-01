@@ -1,13 +1,39 @@
-import {Button} from "@/components/ui/button";
-import Link from "next/link";
+'use client'
+
+import { useState, useEffect } from 'react'
+
+import { ThemeProvider } from 'next-themes'
+import Navbar from "@/components/shared/Navbar";
+import HowItWorks from "@/components/shared/HowItWorks";
+import Hero from "@/components/shared/Hero";
+import Features from "@/components/shared/Features";
+import Pricing from "@/components/shared/Pricing";
+import Testimonials from "@/components/shared/Testimonials";
+import Footer from "@/components/shared/Footer";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <h1 className={"text-4xl font-extrabold"}>Hello World</h1>
-        <Link href="/dashboard">
-            <Button className={"font-semibold"}>Click Me!</Button>
-        </Link>
-    </div>
-  );
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
+
+    if (!mounted) {
+        return null
+    }
+
+    return (
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <div className="min-h-screen bg-gradient-to-b from-background to-background/80 dark:from-background dark:to-background/80">
+                <Navbar />
+                <Hero />
+                <Features />
+                <HowItWorks />
+                <Pricing />
+                <Testimonials />
+                <Footer />
+            </div>
+        </ThemeProvider>
+    )
 }
+
