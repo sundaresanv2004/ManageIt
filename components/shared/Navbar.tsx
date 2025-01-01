@@ -60,7 +60,7 @@ export default function Navbar() {
                 <Link href="/auth/login">
                   <Button variant="outline">Log in</Button>
                 </Link>
-                <Link href="/auth/singup">
+                <Link href="/auth/signup">
                   <Button>Sign up</Button>
                 </Link>
               </div>

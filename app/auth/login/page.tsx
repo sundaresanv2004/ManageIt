@@ -5,6 +5,7 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import {UserAuthForm} from "@/components/shared/user-auth-form";
+import {loginImage} from "@/public/images";
 
 export const metadata: Metadata = {
     title: "Login",
@@ -14,23 +15,7 @@ export const metadata: Metadata = {
 export default function LoginPage() {
     return (
         <>
-            <div className="md:hidden">
-                <Image
-                    src="/authentication-dark.png"
-                    width={1280}
-                    height={843}
-                    alt="Authentication"
-                    className="block dark:hidden"
-                />
-                <Image
-                    src="/authentication.png"
-                    width={1280}
-                    height={843}
-                    alt="Authentication"
-                    className="hidden dark:block"
-                />
-            </div>
-            <div className="container relative hidden h-[800px] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+            <div className="container relative h-[800px] flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
                 <Link
                     href="/auth/signup"
                     className={cn(
@@ -40,7 +25,7 @@ export default function LoginPage() {
                 >
                     Sign Up
                 </Link>
-                <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
+                <div className="relative hidden h-screen flex-col bg-muted p-10 text-white dark:border-r lg:flex">
                     <div className="absolute inset-0 bg-zinc-900" />
                     <div className="relative z-20 flex items-center text-lg font-medium">
                         <svg
@@ -57,6 +42,13 @@ export default function LoginPage() {
                         </svg>
                         ManageIt
                     </div>
+                    <Image
+                        src={loginImage}
+                        width={1000}
+                        height={843}
+                        alt="image"
+                        className="relative z-30 mt-10"
+                    />
                     <div className="relative z-20 mt-auto">
                         <blockquote className="space-y-2">
                             <p className="text-lg">
@@ -80,14 +72,14 @@ export default function LoginPage() {
                         <p className="px-8 text-center text-sm text-muted-foreground">
                             By clicking continue, you agree to our{" "}
                             <Link
-                                href="/terms"
+                                href="/terms-of-conditions"
                                 className="underline underline-offset-4 hover:text-primary"
                             >
                                 Terms of Service
                             </Link>{" "}
                             and{" "}
                             <Link
-                                href="/privacy"
+                                href="/privacy-policy"
                                 className="underline underline-offset-4 hover:text-primary"
                             >
                                 Privacy Policy

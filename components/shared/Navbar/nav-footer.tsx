@@ -9,6 +9,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import {signOut} from "next-auth/react";
 
 export function NavFooter() {
     const { setTheme, theme } = useTheme()
@@ -32,7 +33,7 @@ export function NavFooter() {
                 </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
-                <SidebarMenuButton>
+                <SidebarMenuButton onClick={() => signOut({ callbackUrl: "/" })}>
                     <LogOut className="text-base"/>
                     <span className="ml-1">Logout</span>
                 </SidebarMenuButton>

@@ -16,7 +16,15 @@ const handler = NextAuth({
     ],
     session: {
         strategy: "jwt"
-    }
+    },
+    callbacks: {
+        async redirect({ url, baseUrl }) {
+            if (url === baseUrl) {
+                return '/dashboard';
+            }
+            return url;
+        },
+    },
 })
 
 export { handler as GET, handler as POST };
