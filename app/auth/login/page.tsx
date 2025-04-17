@@ -1,4 +1,3 @@
-import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -7,10 +6,6 @@ import { buttonVariants } from "@/components/ui/button"
 import {UserAuthForm} from "@/components/shared/user-auth-form";
 import {loginImage} from "@/public/images";
 
-export const metadata: Metadata = {
-    title: "Login",
-    description: "Login to your account",
-}
 
 export default function LoginPage() {
     return (

@@ -3,7 +3,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 import {ThemeProvider} from "@/components/ui/theme-provider";
 import {Toaster} from "@/components/ui/toaster";
-import AuthProvider from "@/app/auth/Provider";
+import { SessionProvider } from "next-auth/react"
+import type { ReactNode } from "react"
+import { auth } from "@/auth"
 
 const SpaceGrotesk = localFont({
   src: "./fonts/SpaceGrotesk.woff",
@@ -15,24 +17,28 @@ export const metadata: Metadata = {
   description: "Manage you task with ManageIt",
 };
 
-export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
-  return (
-    <html lang="en">
-      <body
-        className={`${SpaceGrotesk.className} antialiased`}
-      >
-      <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-      >
-          <AuthProvider>
-              {children}
-          </AuthProvider>
-          <Toaster />
-      </ThemeProvider>
-      </body>
-    </html>
-  );
+const RootLayout = async ({ children }: { children: ReactNode }) => {
+    const session = await auth()
+
+    return (
+        <html lang="en">
+        <SessionProvider session={session}>
+            <body
+                className={`${SpaceGrotesk.className} antialiased`}
+            >
+            <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+            >
+                {children}
+                <Toaster />
+            </ThemeProvider>
+            </body>
+        </SessionProvider>
+        </html>
+    );
 }
+
+export default RootLayout;
